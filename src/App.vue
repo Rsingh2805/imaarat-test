@@ -1,10 +1,26 @@
 <template>
   <v-app>
-    <v-btn fab color="white" class="elevation-0 menu-btn">
-      <v-icon>mdi-menu</v-icon>
-    </v-btn>
+    <v-app-bar color="white" elevate-on-scroll fixed class="app-bar">
+      <v-container class="d-flex">
+        <v-img max-height="40px" max-width="40px" @click="redirect()" src="./assets/logo.jpg" />
+        <v-spacer />
+        <v-btn icon v-if="!$vuetify.breakpoint.mdAndUp" to="/about">
+          <v-icon>mdi-account-group</v-icon>
+        </v-btn>
+        <v-btn icon v-if="!$vuetify.breakpoint.mdAndUp" to="/gallery">
+          <v-icon>mdi-image-multiple</v-icon>
+        </v-btn>
+        <v-btn text v-if="$vuetify.breakpoint.mdAndUp" to="/about">
+          About
+        </v-btn>
+        <v-btn text v-if="$vuetify.breakpoint.mdAndUp" to="/gallery">
+          Our Work
+        </v-btn>
+      </v-container>
+      
+    </v-app-bar>
     <v-main>
-      <home />
+      <router-view />
     </v-main>
     <v-footer dark class="py-10">
       <v-container>
@@ -18,13 +34,12 @@
             123310
           </div>
           <v-divider vertical class="mx-2" />
-          <v-row class="text-center">
+          <v-row class="text-center" v-if="$vuetify.breakpoint.mdAndUp">
             <v-col cols="6">Home</v-col>
             <v-col cols="6">Our services</v-col>
             <v-col cols="6">About us</v-col>
-            <v-col cols="6">Get in Touch</v-col>
           </v-row>
-          <v-divider vertical class="mx-2" />
+          <v-divider vertical class="mx-2" v-if="$vuetify.breakpoint.mdAndUp" />
           <div class="flex-grow-1 text-right">
             <div>
               +91 8128129120
@@ -51,13 +66,6 @@
   </v-app>
 </template>
 
-<script>
-import Home from './views/Home'
-export default {
-  components: {Home}
-}
-</script>
-
 <style lang="scss" scoped>
   .menu-btn {
     position: fixed;
@@ -65,4 +73,18 @@ export default {
     top: 10px;
     z-index: 1;
   }
+  .app-bar{
+    top: 0;
+  }
 </style>
+
+<script>
+
+export default {
+  methods: {
+    redirect () {
+      this.$router.push('/')
+    }
+  }
+}
+</script>
